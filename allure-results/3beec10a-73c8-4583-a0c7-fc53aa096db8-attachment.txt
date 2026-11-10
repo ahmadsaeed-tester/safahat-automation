@@ -1,0 +1,4 @@
+Book search blocked by the site's security verification page.
+PDF book search blocked by the site's security verification page.
+Author-filter search blocked by the site's security verification page.
+Topic search blocked by the site's security verification page.

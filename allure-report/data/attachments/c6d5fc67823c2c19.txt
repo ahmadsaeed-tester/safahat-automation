@@ -1,0 +1,3 @@
+Online book reading blocked by the site's security verification page.
+PDF book search blocked by the site's security verification page.
+Author-filter search blocked by the site's security verification page.

@@ -1,0 +1,6 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","5568","4. Filter books by author and read a book online","chromium","2026-11-10","skipped","2026-11-10","Safahat Automation Suite","safahat.spec.ts","",""
+"","6124","3. Search for الدنيا في باريس and download the PDF","chromium","2026-11-10","skipped","2026-11-10","Safahat Automation Suite","safahat.spec.ts","",""
+"","6986","2. Search for a book, open it, and verify readable chapter","chromium","2026-11-10","skipped","2026-11-10","Safahat Automation Suite","safahat.spec.ts","",""
+"","10066","1. Navigate, browse, and scroll catalog","chromium","2026-11-10","passed","2026-11-10","Safahat Automation Suite","safahat.spec.ts","",""
+"","14107","Safahat end-to-end catalog, search, reading, and download flows","chromium","2026-11-10","skipped","2026-11-10","","safahat.spec.ts","",""

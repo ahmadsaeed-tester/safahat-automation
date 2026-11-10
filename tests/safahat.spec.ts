@@ -118,6 +118,47 @@ test('Safahat end-to-end catalog, search, reading, and download flows', async ({
     await expect(readableChapter).toBeVisible();
   });
 
+  await test.step('Search book topics, select literature, and open the first book', async () => {
+    await safahat.navigateTo();
+    if (!(await canContinue('Topic search', safahat.searchInput))) return;
+    await safahat.searchInput.fill('أدب');
+    await safahat.searchInput.press('Enter');
+    await expect(page).toHaveURL(/\/search\/keyword\//);
+
+    const topicsFilter = page.getByText('موضوعات الكتب', { exact: true });
+    if (!(await canContinue('Book topics filter', topicsFilter))) return;
+    await topicsFilter.click();
+
+    const literatureFilter = page.locator('a[href="/books/categories/literature/"]');
+    await expect(literatureFilter).toBeVisible();
+    await literatureFilter.click();
+    await expect(page).toHaveURL(/\/books\/categories\/literature\/$/);
+    await expect(page.getByRole('heading', { name: 'أدب', exact: true })).toBeVisible();
+
+    const firstLiteratureBook = page
+      .locator('a[href^="/books/"][href$="/"]')
+      .filter({ has: page.locator('img[alt^="كتاب بعنوان"]') })
+      .first();
+    if (!(await canContinue('Literature book results', firstLiteratureBook))) return;
+
+    const bookHref = await firstLiteratureBook.getAttribute('href');
+    const coverAlt = await firstLiteratureBook.locator('img').getAttribute('alt');
+    if (!bookHref || !/^\/books\/\d+\/$/.test(bookHref)) {
+      throw new Error('The first literature result did not have a valid book link.');
+    }
+    if (!coverAlt || !coverAlt.startsWith('كتاب بعنوان ')) {
+      throw new Error('The first literature result did not have a book title.');
+    }
+    const firstBookTitle = coverAlt.replace(/^كتاب بعنوان\s+/, '');
+
+    await firstLiteratureBook.click();
+    const bookTitleOnPage = page.getByText(firstBookTitle, { exact: true }).first();
+    if (!(await canContinue('Open first literature book', bookTitleOnPage))) return;
+
+    await expect(page).toHaveURL(new URL(bookHref, 'https://www.safahat.org').href);
+    await expect(page.locator('main')).toContainText(firstBookTitle);
+  });
+
   test.skip(
     blockedFlows.length > 0,
     `The site blocked these flows with a security verification page: ${blockedFlows.join(', ')}`,
